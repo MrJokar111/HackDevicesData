@@ -1,21 +1,3 @@
-
-Sign up
-Th30neAnd0nly
-/
-TrackDown
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-TrackDown/index.js
-@prateek-chaubey
-prateek-chaubey Update index.js
- 1 contributor
-241 lines (161 sloc)  6.3 KB
 const fs = require("fs");
 const express = require("express");
 var cors = require('cors');
