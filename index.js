@@ -14,7 +14,7 @@ app.use(cors());
 app.set("view engine", "ejs");
 
 //Modify your URL here
-var hostURL="http://cliaakqdp000040652cwlyrxi.demo.coolify.io";
+var hostURL="http://cliaaw55a00004067j38cudkg.demo.coolify.io";
 //TOGGLE for Shorters
 var use1pt=false;
 
